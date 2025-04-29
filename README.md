@@ -4,6 +4,9 @@
 
 An advanced and scalable full-stack e-commerce platform with user authentication, product catalog, cart functionality, and payment integration.
 
+### 🔴Live Preview -https://e-commerce-website-github-io-five.vercel.app/
+<img width="1353" alt="ecom-page" src="https://github.com/user-attachments/assets/d0e51e82-c436-4e59-a2da-b2200cf17649" />
+
 ---
 
 ## 📋 Table of Contents
