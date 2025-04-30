@@ -1,13 +1,9 @@
----
-
 # 🛍️ E-Commerce Website
 
 #### An advanced and scalable full-stack e-commerce platform with user authentication, product catalog, cart functionality, and payment integration.
 
 ### 🔴Live Preview -https://e-commerce-website-github-io-five.vercel.app/
 <img width="1353" alt="ecom-page" src="https://github.com/user-attachments/assets/d0e51e82-c436-4e59-a2da-b2200cf17649" />
-
----
 
 ## 📋 Table of Contents
 
@@ -20,8 +16,6 @@
 - [📦 Deployment](#-deployment)
 - [🧰 Tech Stack](#-tech-stack)
 - [📄 License](#-license)
-
----
 
 ## ✨ Features
 
@@ -51,7 +45,4 @@
 - **Styling**: Tailwind + custom utility classes
 - **Deployment**: Vercel / Netlify (optional)
 
-
 *More features like admin panel, wishlist, and product management coming soon!*
-
----
