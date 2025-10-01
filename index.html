@@ -3,736 +3,535 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexus | Premium E-Commerce Store</title>
-    <link rel="stylesheet" href="styles/index.css"> 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <script src="index.js" defer></script>
+    <title>ShopEasy - Your One-Stop Online Store</title>
+    <style>
+        :root {
+            --primary: #4a6fa5;
+            --secondary: #166088;
+            --accent: #4fc3a1;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --danger: #dc3545;
+            --success: #28a745;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: var(--box-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--danger);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 20px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 12px 24px;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Product Grid */
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 32px;
+            color: var(--secondary);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .product-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .product-price {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .product-description {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        .add-to-cart:hover {
+            background-color: var(--secondary);
+        }
+
+        /* Cart Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 30px;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--dark);
+        }
+
+        .cart-items {
+            margin-bottom: 30px;
+        }
+
+        .cart-item {
+            display: flex;
+            border-bottom: 1px solid #eee;
+            padding: 15px 0;
+        }
+
+        .cart-item-image {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: var(--border-radius);
+            margin-right: 15px;
+        }
+
+        .cart-item-details {
+            flex: 1;
+        }
+
+        .cart-item-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .cart-item-price {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .quantity-btn {
+            background-color: #eee;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .quantity-input {
+            width: 50px;
+            text-align: center;
+            margin: 0 10px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            padding: 5px;
+        }
+
+        .remove-item {
+            color: var(--danger);
+            cursor: pointer;
+            margin-left: 15px;
+        }
+
+        .cart-total {
+            text-align: right;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background-color: var(--success);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .checkout-btn:hover {
+            background-color: #218838;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 40px 0;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: white;
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            color: #aaa;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--success);
+            color: white;
+            padding: 15px 25px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            z-index: 1000;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: transform 0.3s, opacity 0.3s;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                padding: 15px 0;
+            }
+
+            nav ul {
+                margin-top: 15px;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
     <header>
-        <div class="header-container">
-            <a href="#home" class="logo">
-                <i class="fas fa-bolt"></i>
-                <span>Nexus</span>
-            </a>
-            
-            <nav id="nav">
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#products">Shop</a></li>
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#testimonials">Reviews</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
-            
-            <div class="header-icons">
-                <button class="theme-toggle" id="themeToggle">
-                    <i class="fas fa-moon"></i>
-                </button>
-                <a href="#" class="header-icon">
-                    <i class="fas fa-search"></i>
-                </a>
-                <a href="#" class="header-icon">
-                    <i class="fas fa-user"></i>
-                </a>
-                <a href="#" class="header-icon">
-                    <i class="fas fa-heart"></i>
-                    <span class="cart-count">3</span>
-                </a>
-                <a href="#" class="header-icon">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span class="cart-count">5</span>
-                </a>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i>🛒</i> ShopEasy
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#" class="active">Home</a></li>
+                        <li><a href="#">Products</a></li>
+                        <li><a href="#">Categories</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li class="cart-icon" id="cartIcon">
+                            🛍️ Cart <span class="cart-count" id="cartCount">0</span>
+                        </li>
+                    </ul>
+                </nav>
             </div>
-            
-            <button class="mobile-menu-btn" id="menuBtn">
-                <i class="fas fa-bars"></i>
-            </button>
         </div>
     </header>
 
     <!-- Hero Section -->
-    <section id="home">
-        <div class="hero-container">
-            <div class="hero-content">
-                <span class="hero-badge">Summer Sale - Up to 50% Off</span>
-                <h1 class="hero-title">Shop the Latest <span>Tech Gadgets</span></h1>
-                <p class="hero-description">
-                    Discover our premium collection of electronics, accessories, and more. 
-                    Free shipping on all orders over $50.
-                </p>
-                <div class="hero-btns">
-                    <a href="#products" class="btn btn-primary">Shop Now</a>
-                    <a href="#features" class="btn btn-outline">Learn More</a>
-                </div>
-            </div>
-            <div class="hero-image">
-                <img src="https://images.unsplash.com/photo-1556656793-08538906a9f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Featured Product">
-            </div>
+    <section class="hero">
+        <div class="container">
+            <h1>Welcome to ShopEasy</h1>
+            <p>Discover amazing products at unbeatable prices. Shop with confidence and enjoy fast delivery right to your doorstep.</p>
+            <a href="#products" class="btn">Shop Now</a>
         </div>
     </section>
 
     <!-- Products Section -->
-    <section id="products" class="section">
-        <div class="container">
-            <div class="section-title">
-                <h2>Trending Products</h2>
-                <p>Check out our most popular items this season</p>
-            </div>
-            
-            <div class="products-grid">
-                <!-- Product 1 -->
-                <div class="product-card">
-                    <span class="product-badge">New</span>
-                    <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1364&q=80" alt="Wireless Headphones">
-                        <div class="product-actions">
-                            <button class="action-btn">
-                                <i class="fas fa-heart"></i>
-                            </button>
-                            <button class="action-btn quick-view-btn" data-id="1">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="product-content">
-                        <span class="product-category">Audio</span>
-                        <h3 class="product-title">Premium Wireless Headphones</h3>
-                        <div class="product-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                            <span>(128)</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">$149.99</span>
-                            <span class="old-price">$199.99</span>
-                            <span class="discount">25% OFF</span>
-                        </div>
-                        <button class="add-to-cart">
-                            <i class="fas fa-shopping-cart"></i> Add to Cart
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Product 2 -->
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1326&q=80" alt="Smart Watch">
-                        <div class="product-actions">
-                            <button class="action-btn">
-                                <i class="fas fa-heart"></i>
-                            </button>
-                            <button class="action-btn quick-view-btn" data-id="2">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="product-content">
-                        <span class="product-category">Wearables</span>
-                        <h3 class="product-title">Smart Watch Pro Series 5</h3>
-                        <div class="product-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <span>(96)</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">$229.99</span>
-                            <span class="old-price">$279.99</span>
-                            <span class="discount">18% OFF</span>
-                        </div>
-                        <button class="add-to-cart">
-                            <i class="fas fa-shopping-cart"></i> Add to Cart
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Product 3 -->
-                <div class="product-card">
-                    <span class="product-badge">Bestseller</span>
-                    <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80" alt="Wireless Earbuds">
-                        <div class="product-actions">
-                            <button class="action-btn">
-                                <i class="fas fa-heart"></i>
-                            </button>
-                            <button class="action-btn quick-view-btn" data-id="3">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="product-content">
-                        <span class="product-category">Audio</span>
-                        <h3 class="product-title">True Wireless Earbuds</h3>
-                        <div class="product-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <span>(245)</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">$89.99</span>
-                            <span class="old-price">$129.99</span>
-                            <span class="discount">31% OFF</span>
-                        </div>
-                        <button class="add-to-cart">
-                            <i class="fas fa-shopping-cart"></i> Add to Cart
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Product 4 -->
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1367&q=80" alt="Smartphone">
-                        <div class="product-actions">
-                            <button class="action-btn">
-                                <i class="fas fa-heart"></i>
-                            </button>
-                            <button class="action-btn quick-view-btn" data-id="4">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="product-content">
-                        <span class="product-category">Phones</span>
-                        <h3 class="product-title">Flagship Smartphone 128GB</h3>
-                        <div class="product-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                            <span>(187)</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">$799.99</span>
-                            <span class="old-price">$899.99</span>
-                            <span class="discount">11% OFF</span>
-                        </div>
-                        <button class="add-to-cart">
-                            <i class="fas fa-shopping-cart"></i> Add to Cart
-                        </button>
-                    </div>
-                </div>
-            </div>
+    <section class="container" id="products">
+        <h2 class="section-title">Featured Products</h2>
+        <div class="products-grid" id="productsGrid">
+            <!-- Products will be dynamically added here -->
         </div>
     </section>
 
-    <!-- Features Section -->
-    <section id="features" class="section">
-        <div class="container">
-            <div class="section-title">
-                <h2>Why Choose Us</h2>
-                <p>We provide the best shopping experience for our customers</p>
-            </div>
-            
-            <div class="features-grid">
-                <!-- Feature 1 -->
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-truck"></i>
-                    </div>
-                    <h3 class="feature-title">Free Shipping</h3>
-                    <p class="feature-description">
-                        Free delivery on all orders over $50. Fast and reliable shipping to your doorstep.
-                    </p>
-                </div>
-                
-                <!-- Feature 2 -->
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-undo"></i>
-                    </div>
-                    <h3 class="feature-title">Easy Returns</h3>
-                    <p class="feature-description">
-                        30-day return policy. No questions asked if you're not satisfied.
-                    </p>
-                </div>
-                
-                <!-- Feature 3 -->
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-lock"></i>
-                    </div>
-                    <h3 class="feature-title">Secure Payment</h3>
-                    <p class="feature-description">
-                        Your payment information is processed securely with 256-bit encryption.
-                    </p>
-                </div>
-                
-                <!-- Feature 4 -->
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-headset"></i>
-                    </div>
-                    <h3 class="feature-title">24/7 Support</h3>
-                    <p class="feature-description">
-                        Our customer service team is available around the clock to assist you.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section id="testimonials" class="section">
-        <div class="container">
-            <div class="section-title">
-                <h2>Customer Reviews</h2>
-                <p>What our customers say about our products and service</p>
-            </div>
-            
-            <div class="testimonials-slider">
-                <div class="testimonials-track" id="testimonialsTrack">
-                    <!-- Testimonial 1 -->
-                    <div class="testimonial-card">
-                        <div class="testimonial-content">
-                            <p class="testimonial-text">
-                                I've ordered multiple items from Nexus and have always been impressed with the quality and fast shipping. The wireless earbuds are my favorite purchase this year!
-                            </p>
-                            <div class="testimonial-author">
-                                <div class="author-avatar">
-                                    <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Sarah Johnson">
-                                </div>
-                                <div class="author-info">
-                                    <h4>Sarah Johnson</h4>
-                                    <p>Verified Customer</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Testimonial 2 -->
-                    <div class="testimonial-card">
-                        <div class="testimonial-content">
-                            <p class="testimonial-text">
-                                The smart watch exceeded my expectations. Great battery life and all the features I need. Customer service was helpful when I had questions about setup.
-                            </p>
-                            <div class="testimonial-author">
-                                <div class="author-avatar">
-                                    <img src="https://randomuser.me/api/portraits/men/44.jpg" alt="Michael Chen">
-                                </div>
-                                <div class="author-info">
-                                    <h4>Michael Chen</h4>
-                                    <p>Verified Customer</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Testimonial 3 -->
-                    <div class="testimonial-card">
-                        <div class="testimonial-content">
-                            <p class="testimonial-text">
-                                Best place to buy tech gadgets online! Prices are competitive and the summer sale had amazing deals. Will definitely shop here again.
-                            </p>
-                            <div class="testimonial-author">
-                                <div class="author-avatar">
-                                    <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Emily Rodriguez">
-                                </div>
-                                <div class="author-info">
-                                    <h4>Emily Rodriguez</h4>
-                                    <p>Verified Customer</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="slider-controls">
-                    <button class="slider-btn" id="prevBtn">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <button class="slider-btn" id="nextBtn">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Newsletter Section -->
-    <section id="newsletter">
-        <div class="newsletter-container">
-            <h2 class="newsletter-title">Join Our Newsletter</h2>
-            <p class="newsletter-description">
-                Subscribe to get updates on new products, exclusive offers, and tech tips.
-            </p>
-            <form class="newsletter-form">
-                <input type="email" class="newsletter-input" placeholder="Your email address" required>
-                <button type="submit" class="newsletter-btn">Subscribe</button>
-            </form>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer id="contact">
-        <div class="footer-container">
-            <!-- Column 1 -->
-            <div class="footer-col">
-                <h3>Nexus</h3>
-                <p style="color: rgba(255,255,255,0.7); margin-top: 1rem; font-size: 0.95rem;">
-                    Your one-stop shop for the latest tech gadgets and electronics.
-                </p>
-                <div class="social-links">
-                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
-                </div>
-            </div>
-            
-            <!-- Column 2 -->
-            <div class="footer-col">
-                <h3>Shop</h3>
-                <ul>
-                    <li><a href="#">Smartphones</a></li>
-                    <li><a href="#">Laptops</a></li>
-                    <li><a href="#">Headphones</a></li>
-                    <li><a href="#">Wearables</a></li>
-                    <li><a href="#">Accessories</a></li>
-                </ul>
-            </div>
-            
-            <!-- Column 3 -->
-            <div class="footer-col">
-                <h3>Support</h3>
-                <ul>
-                    <li><a href="#">Contact Us</a></li>
-                    <li><a href="#">FAQs</a></li>
-                    <li><a href="#">Shipping Policy</a></li>
-                    <li><a href="#">Returns & Exchanges</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                </ul>
-            </div>
-            
-            <!-- Column 4 -->
-            <div class="footer-col">
-                <h3>Contact</h3>
-                <ul>
-                    <li><a href="#"><i class="fas fa-map-marker-alt"></i> 123 Tech Street, Silicon Valley</a></li>
-                    <li><a href="#"><i class="fas fa-phone-alt"></i> +1 (555) 123-4567</a></li>
-                    <li><a href="#"><i class="fas fa-envelope"></i> support@nexus.com</a></li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <p>&copy; 2023 Nexus. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <!-- Back to Top Button -->
-    <div class="back-to-top" id="backToTop">
-        <i class="fas fa-arrow-up"></i>
-    </div>
-
-    <!-- Quick View Modal -->
-    <div class="modal" id="quickViewModal">
+    <!-- Cart Modal -->
+    <div class="modal" id="cartModal">
         <div class="modal-content">
             <span class="close-modal" id="closeModal">&times;</span>
-            <div class="quick-view-container">
-                <div class="quick-view-image">
-                    <img src="" alt="Product Image" id="modalProductImage">
-                </div>
-                <div class="quick-view-details">
-                    <h2 class="quick-view-title" id="modalProductTitle"></h2>
-                    <div class="product-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                        <span>(128)</span>
-                    </div>
-                    <div class="quick-view-price" id="modalProductPrice"></div>
-                    <p class="quick-view-description" id="modalProductDescription">
-                        This premium product features advanced technology with a sleek design. Perfect for everyday use with long-lasting battery life and premium materials. Includes 1-year warranty and free accessories.
-                    </p>
-                    <div class="quantity-selector">
-                        <button class="quantity-btn minus">-</button>
-                        <input type="number" class="quantity-input" value="1" min="1">
-                        <button class="quantity-btn plus">+</button>
-                    </div>
-                    <div class="quick-view-actions">
-                        <button class="btn btn-primary add-to-cart">
-                            <i class="fas fa-shopping-cart"></i> Add to Cart
-                        </button>
-                        <button class="btn btn-outline">
-                            <i class="fas fa-heart"></i> Add to Wishlist
-                        </button>
-                    </div>
-                </div>
+            <h2>Your Shopping Cart</h2>
+            <div class="cart-items" id="cartItems">
+                <!-- Cart items will be dynamically added here -->
             </div>
+            <div class="cart-total">
+                Total: $<span id="cartTotal">0.00</span>
+            </div>
+            <button class="checkout-btn" id="checkoutBtn">Proceed to Checkout</button>
         </div>
     </div>
 
-    <script>
-        // Mobile Menu Toggle
-        const menuBtn = document.getElementById('menuBtn');
-        const nav = document.getElementById('nav');
-        
-        menuBtn.addEventListener('click', () => {
-            nav.classList.toggle('active');
-            menuBtn.innerHTML = nav.classList.contains('active') 
-                ? '<i class="fas fa-times"></i>' 
-                : '<i class="fas fa-bars"></i>';
-        });
-        
-        // Testimonial Slider
-        const track = document.getElementById('testimonialsTrack');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        let currentSlide = 0;
-        
-        function updateSlider() {
-            track.style.transform = `translateX(-${currentSlide * 100}%)`;
-        }
-        
-        nextBtn.addEventListener('click', () => {
-            currentSlide = (currentSlide + 1) % 3;
-            updateSlider();
-        });
-        
-        prevBtn.addEventListener('click', () => {
-            currentSlide = (currentSlide - 1 + 3) % 3;
-            updateSlider();
-        });
-        
-        // Auto-slide every 5 seconds
-        setInterval(() => {
-            currentSlide = (currentSlide + 1) % 3;
-            updateSlider();
-        }, 5000);
-        
-        // Add to Cart Animation
-        const addToCartButtons = document.querySelectorAll('.add-to-cart');
-        
-        addToCartButtons.forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                // Animation
-                this.innerHTML = '<i class="fas fa-check"></i> Added';
-                this.style.background = 'var(--success)';
-                
-                // Reset after 2 seconds
-                setTimeout(() => {
-                    this.innerHTML = '<i class="fas fa-shopping-cart"></i> Add to Cart';
-                    this.style.background = 'var(--primary)';
-                }, 2000);
-                
-                // Update cart count (simulated)
-                const cartCounts = document.querySelectorAll('.cart-count');
-                cartCounts.forEach(count => {
-                    const current = parseInt(count.textContent);
-                    count.textContent = current + 1;
-                });
-            });
-        });
-        
-        // Header scroll effect
-        window.addEventListener('scroll', function() {
-            const header = document.querySelector('header');
-            const backToTop = document.getElementById('backToTop');
-            
-            if (window.scrollY > 50) {
-                header.style.boxShadow = '0 4px 6px -1px var(--shadow-color)';
-            } else {
-                header.style.boxShadow = '0 1px 3px var(--shadow-color)';
-            }
-            
-            // Show/hide back to top button
-            if (window.scrollY > 300) {
-                backToTop.classList.add('visible');
-            } else {
-                backToTop.classList.remove('visible');
-            }
-        });
-        
-        // Back to top button
-        document.getElementById('backToTop').addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-        
-        // Dark mode toggle
-        const themeToggle = document.getElementById('themeToggle');
-        const body = document.body;
-        
-        // Check for saved user preference
-        if (localStorage.getItem('darkMode') === 'enabled') {
-            body.classList.add('dark-mode');
-            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-        }
-        
-        themeToggle.addEventListener('click', () => {
-            body.classList.toggle('dark-mode');
-            
-            if (body.classList.contains('dark-mode')) {
-                localStorage.setItem('darkMode', 'enabled');
-                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-            } else {
-                localStorage.setItem('darkMode', 'disabled');
-                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-            }
-        });
-        
-        // Quick View Modal
-        const quickViewBtns = document.querySelectorAll('.quick-view-btn');
-        const quickViewModal = document.getElementById('quickViewModal');
-        const closeModal = document.getElementById('closeModal');
-        const modalProductImage = document.getElementById('modalProductImage');
-        const modalProductTitle = document.getElementById('modalProductTitle');
-        const modalProductPrice = document.getElementById('modalProductPrice');
-        
-        // Product data for quick view
-        const products = {
-            1: {
-                title: 'Premium Wireless Headphones',
-                price: '$149.99',
-                image: 'https://images.unsplash.com/photo-1546868871-7041f2a55e12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1364&q=80'
-            },
-            2: {
-                title: 'Smart Watch Pro Series 5',
-                price: '$229.99',
-                image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1326&q=80'
-            },
-            3: {
-                title: 'True Wireless Earbuds',
-                price: '$89.99',
-                image: 'https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80'
-            },
-            4: {
-                title: 'Flagship Smartphone 128GB',
-                price: '$799.99',
-                image: 'https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1367&q=80'
-            }
-        };
-        
-        quickViewBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const productId = btn.getAttribute('data-id');
-                const product = products[productId];
-                
-                modalProductImage.src = product.image;
-                modalProductTitle.textContent = product.title;
-                modalProductPrice.textContent = product.price;
-                
-                quickViewModal.style.display = 'block';
-                document.body.style.overflow = 'hidden';
-            });
-        });
-        
-        closeModal.addEventListener('click', () => {
-            quickViewModal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        });
-        
-        window.addEventListener('click', (e) => {
-            if (e.target === quickViewModal) {
-                quickViewModal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
-        });
-        
-        // Quantity selector in modal
-        const minusBtn = document.querySelector('.minus');
-        const plusBtn = document.querySelector('.plus');
-        const quantityInput = document.querySelector('.quantity-input');
-        
-        minusBtn.addEventListener('click', () => {
-            let value = parseInt(quantityInput.value);
-            if (value > 1) {
-                quantityInput.value = value - 1;
-            }
-        });
-        
-        plusBtn.addEventListener('click', () => {
-            let value = parseInt(quantityInput.value);
-            quantityInput.value = value + 1;
-        });
-        
-        // Form submission (prevent default)
-        document.querySelector('.newsletter-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const input = e.target.querySelector('input');
-            input.value = '';
-            alert('Thank you for subscribing to our newsletter!');
-        });
-        
-        // Example: Fetch products from backend and log them
-        fetch('http://localhost:5000/api/products')
-          .then(res => res.json())
-          .then(products => {
-            const grid = document.querySelector('.products-grid');
-            grid.innerHTML = products.map(product => `
-              <div class="product-card">
-                <img src="${product.image}" alt="${product.title}">
-                <h3>${product.title}</h3>
-                <p>$${product.price}</p>
-                <button class="add-to-cart" data-id="${product._id}">Add to Cart</button>
-                <button class="add-to-fav" data-id="${product._id}">❤️</button>
-              </div>
-            `).join('');
-          })
-          .catch(error => console.error('Error fetching products:', error));
-          
-        document.addEventListener('click', function(e) {
-          if (e.target.classList.contains('add-to-fav')) {
-            const productId = e.target.dataset.id;
-            fetch('http://localhost:5000/api/favorites', {
-              method: 'POST',
-              headers: {'Content-Type': 'application/json'},
-              body: JSON.stringify({ productId })
-            })
-            .then(res => res.json())
-            .then(data => alert('Added to favorites!'));
-          }
-        });
-        
-        document.addEventListener('click', function(e) {
-          if (e.target.classList.contains('add-to-cart')) {
-            const productId = e.target.dataset.id;
-            fetch('http://localhost:5000/api/cart', {
-              method: 'POST',
-              headers: {'Content-Type': 'application/json'},
-              body: JSON.stringify({ productId })
-            })
-            .then(res => res.json())
-            .then(data => alert('Added to cart!'));
-          }
-        });
-        
-        function login(email, password) {
-          fetch('http://localhost:5000/api/login', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ email, password })
-          })
-          .then(res => res.json())
-          .then(data => {
-            if (data.token) {
-              localStorage.setItem('token', data.token);
-              alert('Login successful!');
-            } else {
-              alert('Login failed!');
-            }
-          });
-        }
-        
-        // Example usage: login('user@example.com', 'password123');
-    </script>
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">Product added to cart!</div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>ShopEasy</h3>
+                    <p>Your one-stop online store for all your needs. Quality products, competitive prices, and excellent customer service.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Products</a></li>
+                        <li><a href="#">Categories</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Customer Service</h3>
+                    <ul>
+                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="#">Returns & Refunds</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li>Email: support@shopeasy.com</li>
+                        <li>Phone: +1 (555) 123-4567</li>
+                        <li>Address: 123 Commerce St, City, State 12345</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2023 ShopEasy. All rights reserved.
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
