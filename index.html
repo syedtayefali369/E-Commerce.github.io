@@ -671,6 +671,68 @@
             input.value = '';
             alert('Thank you for subscribing to our newsletter!');
         });
+        
+        // Example: Fetch products from backend and log them
+        fetch('http://localhost:5000/api/products')
+          .then(res => res.json())
+          .then(products => {
+            const grid = document.querySelector('.products-grid');
+            grid.innerHTML = products.map(product => `
+              <div class="product-card">
+                <img src="${product.image}" alt="${product.title}">
+                <h3>${product.title}</h3>
+                <p>$${product.price}</p>
+                <button class="add-to-cart" data-id="${product._id}">Add to Cart</button>
+                <button class="add-to-fav" data-id="${product._id}">❤️</button>
+              </div>
+            `).join('');
+          })
+          .catch(error => console.error('Error fetching products:', error));
+          
+        document.addEventListener('click', function(e) {
+          if (e.target.classList.contains('add-to-fav')) {
+            const productId = e.target.dataset.id;
+            fetch('http://localhost:5000/api/favorites', {
+              method: 'POST',
+              headers: {'Content-Type': 'application/json'},
+              body: JSON.stringify({ productId })
+            })
+            .then(res => res.json())
+            .then(data => alert('Added to favorites!'));
+          }
+        });
+        
+        document.addEventListener('click', function(e) {
+          if (e.target.classList.contains('add-to-cart')) {
+            const productId = e.target.dataset.id;
+            fetch('http://localhost:5000/api/cart', {
+              method: 'POST',
+              headers: {'Content-Type': 'application/json'},
+              body: JSON.stringify({ productId })
+            })
+            .then(res => res.json())
+            .then(data => alert('Added to cart!'));
+          }
+        });
+        
+        function login(email, password) {
+          fetch('http://localhost:5000/api/login', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ email, password })
+          })
+          .then(res => res.json())
+          .then(data => {
+            if (data.token) {
+              localStorage.setItem('token', data.token);
+              alert('Login successful!');
+            } else {
+              alert('Login failed!');
+            }
+          });
+        }
+        
+        // Example usage: login('user@example.com', 'password123');
     </script>
 </body>
 </html>
